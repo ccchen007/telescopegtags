@@ -1,14 +1,14 @@
 -- 执行 global 符号查找命令
 local function exec_global_symbol(symbol, extras)
     local global_cmd = string.format('global --result="grep" %s "%s" 2>&1', extras, symbol)
-    return require("telescope-gtags-custom").exec_global(global_cmd)
+    return require("telescope-gtags").exec_global(global_cmd)
 end
 
 -- 执行 global 查找当前文件标签命令
 local function exec_global_current_file()
     local file = vim.call("expand", '%')
     local global_cmd = string.format('global --result="grep" -f "%s" 2>&1', file)
-    return require("telescope-gtags-custom").exec_global(global_cmd)
+    return require("telescope-gtags").exec_global(global_cmd)
 end
 
 -- 执行 global 命令并处理结果
@@ -74,7 +74,16 @@ local function gtags_picker(gtags_result, filter_func)
     end
 
     -- 创建 telescope 选择器
-    local opts = {}
+    local opts = {
+        layout_strategy = "vertical",  -- 设置为垂直模式
+        layout_config = {
+            vertical = {
+                width = 0.7,  -- 调整宽度，适配需要
+                mirror = true, -- preview窗口在result下方
+                preview_height = 0.3,  -- 设置预览区域的高度
+            },
+        },
+    }
     pickers.new(opts, {
         prompt_title = "GNU Gtags",
         finder = finders.new_table({
@@ -160,7 +169,7 @@ end
 function M.setAutoIncUpdate(enable)
     if enable then
         vim.api.nvim_command("augroup AutoUpdateGtags")
-        vim.api.nvim_command('autocmd BufWritePost * lua require("telescope-gtags-custom").updateGtags()')
+        vim.api.nvim_command('autocmd BufWritePost * lua require("telescope-gtags").updateGtags()')
         vim.api.nvim_command("augroup END")
     end
 end

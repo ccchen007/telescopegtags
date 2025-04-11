@@ -2,14 +2,25 @@
 
 fork from  https://github.com/ivechan/telescope-gtags.git
 
+lazy setting
 ```
-nnoremap <leader>m <cmd>lua require('telescope.builtin').oldfiles()<CR>
 
-nnoremap <silent> <leader>gu :lua require('telescope-gtags').updateGtags()<CR>
+return {
+  "ccchen007/telescopegtags",
+  config = function()
 
-nnoremap <leader>ld <cmd>lua require('telescope-gtags').showDefinition()<CR>
+      vim.keymap.set('n', '<leader>gr', function()
+          require('telescope-gtags').showReference()
+      end, { noremap = true, silent = true, desc = "Show GTAGS references" })
 
-nnoremap <leader>li <cmd>lua require('telescope-gtags').showReference()<CR>
+      vim.keymap.set('n', '<leader>gd', function()
+          require('telescope-gtags').showDefinition()
+      end, { silent = true, noremap = true, desc = 'find in gtags current word Definition' })
 
-nnoremap <leader>lh <cmd>lua require('telescope-gtags').showdeclare()<CR>
+      vim.api.nvim_set_keymap('n', '<leader>lug', '<cmd>lua require("telescope-gtags").updateGtags()<CR>', { silent = true, noremap = true })
+  end,
+
+}
+
 ```
+
