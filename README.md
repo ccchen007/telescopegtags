@@ -11,11 +11,11 @@ return {
 
       vim.keymap.set('n', '<leader>gr', function()
           require('telescope-gtags').showReference()
-      end, { noremap = true, silent = true, desc = "Show GTAGS references" })
+      end, { noremap = true, silent = true, desc = "Show GTAGS references of current word" })
 
       vim.keymap.set('n', '<leader>gd', function()
           require('telescope-gtags').showDefinition()
-      end, { silent = true, noremap = true, desc = 'find in gtags current word Definition' })
+      end, { silent = true, noremap = true, desc = 'Show GTAGS definition of current word' })
 
       vim.api.nvim_set_keymap('n', '<leader>lug', '<cmd>lua require("telescope-gtags").updateGtags()<CR>', { silent = true, noremap = true })
   end,
