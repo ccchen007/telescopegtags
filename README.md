@@ -24,3 +24,4 @@ return {
 
 ```
 
+It's better to use "git ls-files | gtags --incremental --file -" to generate glbal tags.
